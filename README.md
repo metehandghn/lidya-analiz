@@ -2,8 +2,60 @@
 
 ### 👉 Canlı site: **[lidyaanaliz.netlify.app](https://lidyaanaliz.netlify.app)**
 
-BIST ve ABD hisseleri için ücretsiz analiz aracı: 9 teknik gösterge, temel veriler (F/K, PD/DD, kâr marjları), 6 ay–5 yıl getiri ve istikrar puanı, boğa/ayı etiketli şirket haberleri, backtest ve grafik görseli analizi.
+![Lidya Analiz ana sayfa](lidya-hero.png)
 
-> ℹ️ Bu repo projenin **ilk sürümünün** (Python/FastAPI) kodunu içerir. Güncel site yeni bir altyapıyla (Cloudflare Workers + Netlify) çalışmaktadır ve kodu paylaşılmamaktadır. Siteyi denemek için yukarıdaki bağlantıyı kullanın.
+BIST ve ABD (NASDAQ/NYSE) hisseleri için ücretsiz, üyeliksiz analiz aracı. Dokuz teknik göstergeyi, şirketin resmi mali tablolarından hesaplanan temel verileri, 5 yıllık getiri ve istikrar puanını ve boğa/ayı etiketli şirket haberlerini tek ekranda toplar. Karar vermez, okunur hale getirir.
+
+Adını, tarihte ilk madeni parayı basan Anadolu uygarlığı **Lidya**'dan alır.
+
+## Özellikler
+
+| | |
+|---|---|
+| **Teknik analiz** | RSI, MACD, Bollinger, Stochastic, ADX, MA Cross, Fibonacci, OBV ve hacim sıçraması. Piyasanın trendli mi yatay mı olduğu ADX ile ölçülür, ağırlıklar buna göre değişir. |
+| **Temel veriler** | F/K, PD/DD, piyasa değeri, brüt ve net kâr marjı, satış ve kâr büyümesi (son 12 ay). BIST için İş Yatırım mali tabloları, ABD için SEC EDGAR resmi bildirimleri. Bankalar, zarar eden ve gelir raporlamayan şirketler ayrıca ele alınır. |
+| **Getiri ve istikrar** | 6 ay, 1 yıl ve 5 yıl getiri, yıllık ortalama getiri, son 5 yılın kaçında yükseldiği. Yükselişin istikrarlı mı dalgalı mı olduğunu 0–100 arası puanla gösterir (trend uyumu, yükselen ay oranı, en büyük düşüş). BIST'te bedelsiz/bölünme kaynaklı fiyat sıçramaları otomatik düzeltilir. |
+| **Boğa / ayı haberleri** | Şirketle ilgili son haberler olumlu (boğa), olumsuz (ayı) veya nötr olarak etiketlenir. Şirketi doğrudan konu almayan piyasa ve liste haberleri "genel" olarak ayrılır. ABD haberleri kısa özetleriyle birlikte Türkçeye çevrilir. |
+| **Backtest** | Sinyallerin geçmişte ne kadar isabetli olduğunu ölçer. |
+| **Ağırlık optimizasyonu** | Göstergelerin ağırlıklarını eğitim/test ayrımıyla, seçilen hisselere göre ayarlar. |
+| **Grafik görseli analizi** | Bir grafiğin ekran görüntüsünden fiyat çizgisini çıkarır ve aynı göstergelerle yorumlar. |
+
+![Analiz ekranı](lidya-analiz.png)
+
+![Getiri, istikrar ve haberler](lidya-getiri-haber.png)
+
+## Önemli bulgu
+
+İki piyasada ve çok sayıda hissede yapılan eğitim/test ayrımlı testlerde teknik göstergelerin isabet oranı yazı-turadan (%50) anlamlı şekilde farklı çıkmadı. Bu yüzden Lidya bir "tahmin aracı" değil, göstergeleri ve verileri düzenli okunur hale getiren bir araçtır. **Yatırım tavsiyesi değildir.**
+
+## Mimari
+
+- **Arayüz:** Tek sayfa HTML/CSS/JavaScript, Netlify'da barındırılır. Tüm göstergeler, backtest, optimizasyon ve görsel analizi ziyaretçinin tarayıcısında hesaplanır.
+- **Veri API'si:** Cloudflare Workers (ücretsiz plan). Fiyat, mali tablo ve haber verisini toplar, Cloudflare KV ile önbelleğe alır.
+- **Çeviri:** Cloudflare Workers AI.
+- **Veri kaynakları:** Twelve Data ve Yahoo Finance (fiyat), İş Yatırım (BIST mali tabloları), SEC EDGAR (ABD mali tabloları), Finnhub ve Google Haberler (haberler).
+- **Güvenlik ve performans:** Kaynak sınırlaması (CORS), IP başına istek limiti, girdi doğrulama, eski veriyi gösterip arka planda yenileyen önbellek.
+
+## Kaynak kod
+
+Bu repo projenin **ilk sürümünün** (Python/FastAPI backend) kodunu içerir. Güncel site yeni bir altyapıyla (Cloudflare Workers + Netlify) çalışmaktadır ve kodu paylaşılmamaktadır. Siteyi denemek için yukarıdaki bağlantıyı kullanın.
+
+## Geliştirici
+
+Metehan Dağhan · [github.com/metehandghn](https://github.com/metehandghn)
 
 ---
+
+# Lidya Analiz (English)
+
+**Live site:** [lidyaanaliz.netlify.app](https://lidyaanaliz.netlify.app)
+
+A free stock analysis tool for Turkish (BIST) and US (NASDAQ/NYSE) stocks. It brings together nine technical indicators, fundamentals computed from official filings (P/E, P/B, margins, growth), 6-month to 5-year returns with a 0–100 trend-stability score, and company news tagged as bullish, bearish or neutral (US news is translated to Turkish with short summaries). It also includes backtesting, train/test weight optimization and chart-screenshot analysis.
+
+**Key finding:** in train/test validated experiments across both markets and many tickers, the hit rate of the technical signals was statistically indistinguishable from a coin flip (about 50%). Lidya is therefore presented as a reader for indicators and data, not a prediction tool. Not investment advice.
+
+**Stack:** single-page HTML/CSS/JS on Netlify (all analytics run in the browser), a data API on Cloudflare Workers with KV caching and Workers AI translation. Data from Twelve Data, Yahoo Finance, İş Yatırım, SEC EDGAR, Finnhub and Google News.
+
+This repository contains the code of the **first version** (Python/FastAPI). The current version runs on a new stack and its source is not published.
+
+*Named after Lydia, the ancient Anatolian kingdom credited with minting the first coins.*
