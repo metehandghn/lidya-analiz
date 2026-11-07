@@ -40,6 +40,40 @@ Adını, tarihte ilk madeni parayı basan Anadolu uygarlığı **Lidya**'dan al�
 
 Bu repo projenin **ilk sürümünün** (Python/FastAPI backend) kodunu içerir. Güncel site yeni bir altyapıyla (Cloudflare Workers + Netlify) çalışmaktadır ve kodu paylaşılmamaktadır. Siteyi denemek için yukarıdaki bağlantıyı kullanın.
 
+## Eski sürümü (Python/FastAPI) çalıştırma
+
+Bu repodaki kod, sitenin ilk sürümünün API'sidir. İlk sürüm **Railway** üzerinde çalışıyordu; aynı şekilde kendi bilgisayarınızda ya da Railway/Render gibi bir Python barındırma servisinde çalıştırabilirsiniz. Bu sürüm artık güncellenmemektedir; temel veriler, getiri/istikrar ve haberler gibi yeni özellikler burada yoktur.
+
+**Kendi bilgisayarında (Python 3.11+):**
+
+```bash
+git clone https://github.com/metehandghn/borsa-paneli-backend.git
+cd borsa-paneli-backend
+python -m venv .venv
+# Windows: .venv\Scripts\activate   |   macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+
+Ardından tarayıcıda `http://127.0.0.1:8000/docs` adresini açın; tüm uç noktaları (analiz, backtest, optimizasyon, grafik görseli yükleme) buradan deneyebilirsiniz.
+
+**Railway / Render'da:**
+
+1. Yeni proje → bu GitHub reposunu seçin.
+2. Başlatma komutu: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+3. Ortam değişkenlerini ekleyin (aşağıda).
+
+**Ortam değişkenleri:**
+
+| Değişken | Açıklama |
+|---|---|
+| `TWELVE_DATA_API_KEY` | ABD hisse fiyatları için [Twelve Data](https://twelvedata.com) ücretsiz API anahtarı. Yoksa yfinance denenir. |
+| `ALLOW_SYNTHETIC_FALLBACK` | Gerçek veri alınamazsa demo veri üretilsin mi? Canlı kullanımda `false` önerilir (varsayılan `true`). |
+| `DATABASE_URL` | Varsayılan: yerel SQLite (`sqlite:///./borsa_paneli.db`). İsterseniz PostgreSQL adresi verebilirsiniz. |
+| `CACHE_TTL_SECONDS` | Fiyat verisinin önbellekte tutulma süresi (varsayılan 900 saniye). |
+
+> Not: Bu repo yalnızca API'yi içerir; ilk sürümün arayüz dosyası burada yer almaz.
+
 ## Geliştirici
 
 Metehan Dağhan · [github.com/metehandghn](https://github.com/metehandghn)
@@ -56,6 +90,6 @@ A free stock analysis tool for Turkish (BIST) and US (NASDAQ/NYSE) stocks. It br
 
 **Stack:** single-page HTML/CSS/JS on Netlify (all analytics run in the browser), a data API on Cloudflare Workers with KV caching and Workers AI translation. Data from Twelve Data, Yahoo Finance, İş Yatırım, SEC EDGAR, Finnhub and Google News.
 
-This repository contains the code of the **first version** (Python/FastAPI). The current version runs on a new stack and its source is not published.
+This repository contains the code of the **first version** (Python/FastAPI API, originally hosted on Railway). The current version runs on a new stack and its source is not published. To run the first version yourself: `pip install -r requirements.txt` then `uvicorn app.main:app --reload` and open `http://127.0.0.1:8000/docs`. On Railway/Render use the start command `uvicorn app.main:app --host 0.0.0.0 --port $PORT` and set `TWELVE_DATA_API_KEY` (optional) and `ALLOW_SYNTHETIC_FALLBACK=false`. This version is no longer maintained.
 
 *Named after Lydia, the ancient Anatolian kingdom credited with minting the first coins.*
