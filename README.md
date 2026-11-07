@@ -16,6 +16,7 @@ Adını, tarihte ilk madeni parayı basan Anadolu uygarlığı **Lidya**'dan al�
 | **Temel veriler** | F/K, PD/DD, piyasa değeri, brüt ve net kâr marjı, satış ve kâr büyümesi (son 12 ay). BIST için İş Yatırım mali tabloları, ABD için SEC EDGAR resmi bildirimleri. Bankalar, zarar eden ve gelir raporlamayan şirketler ayrıca ele alınır. |
 | **Getiri ve istikrar** | 6 ay, 1 yıl ve 5 yıl getiri, yıllık ortalama getiri, son 5 yılın kaçında yükseldiği. Yükselişin istikrarlı mı dalgalı mı olduğunu 0–100 arası puanla gösterir (trend uyumu, yükselen ay oranı, en büyük düşüş). BIST'te bedelsiz/bölünme kaynaklı fiyat sıçramaları otomatik düzeltilir. |
 | **Boğa / ayı haberleri** | Şirketle ilgili son haberler olumlu (boğa), olumsuz (ayı) veya nötr olarak etiketlenir. Şirketi doğrudan konu almayan piyasa ve liste haberleri "genel" olarak ayrılır. ABD haberleri kısa özetleriyle birlikte Türkçeye çevrilir. |
+| **KAP açıklamaları** | BIST hisselerinde şirketin son 90 gündeki resmi KAP bildirimleri (geri alım, temettü, yeni iş ilişkisi, finansal rapor vb.) tarih sırasıyla listelenir; önemli açıklamalar işaretlenir. |
 | **Backtest** | Sinyallerin geçmişte ne kadar isabetli olduğunu ölçer. |
 | **Ağırlık optimizasyonu** | Göstergelerin ağırlıklarını eğitim/test ayrımıyla, seçilen hisselere göre ayarlar. |
 | **Grafik görseli analizi** | Bir grafiğin ekran görüntüsünden fiyat çizgisini çıkarır ve aynı göstergelerle yorumlar. |
@@ -33,7 +34,7 @@ Adını, tarihte ilk madeni parayı basan Anadolu uygarlığı **Lidya**'dan al�
 - **Arayüz:** Tek sayfa HTML/CSS/JavaScript, Netlify'da barındırılır. Tüm göstergeler, backtest, optimizasyon ve görsel analizi ziyaretçinin tarayıcısında hesaplanır.
 - **Veri API'si:** Cloudflare Workers (ücretsiz plan). Fiyat, mali tablo ve haber verisini toplar, Cloudflare KV ile önbelleğe alır.
 - **Çeviri:** Cloudflare Workers AI.
-- **Veri kaynakları:** Twelve Data ve Yahoo Finance (fiyat), İş Yatırım (BIST mali tabloları), SEC EDGAR (ABD mali tabloları), Finnhub ve Google Haberler (haberler).
+- **Veri kaynakları:** Twelve Data ve Yahoo Finance (fiyat), İş Yatırım (BIST mali tabloları), SEC EDGAR (ABD mali tabloları), Finnhub ve Google Haberler (haberler), KAP bildirimlerini yayımlayan haber siteleri (KAP açıklamaları).
 - **Güvenlik ve performans:** Kaynak sınırlaması (CORS), IP başına istek limiti, girdi doğrulama, eski veriyi gösterip arka planda yenileyen önbellek.
 
 ## Kaynak kod
@@ -84,7 +85,7 @@ Metehan Dağhan · [github.com/metehandghn](https://github.com/metehandghn)
 
 **Live site:** [lidyaanaliz.netlify.app](https://lidyaanaliz.netlify.app)
 
-A free stock analysis tool for Turkish (BIST) and US (NASDAQ/NYSE) stocks. It brings together nine technical indicators, fundamentals computed from official filings (P/E, P/B, margins, growth), 6-month to 5-year returns with a 0–100 trend-stability score, and company news tagged as bullish, bearish or neutral (US news is translated to Turkish with short summaries). It also includes backtesting, train/test weight optimization and chart-screenshot analysis.
+A free stock analysis tool for Turkish (BIST) and US (NASDAQ/NYSE) stocks. It brings together nine technical indicators, fundamentals computed from official filings (P/E, P/B, margins, growth), 6-month to 5-year returns with a 0–100 trend-stability score, company news tagged as bullish, bearish or neutral (US news is translated to Turkish with short summaries) and, for BIST stocks, the company's recent official KAP (Public Disclosure Platform) filings. It also includes backtesting, train/test weight optimization and chart-screenshot analysis.
 
 **Key finding:** in train/test validated experiments across both markets and many tickers, the hit rate of the technical signals was statistically indistinguishable from a coin flip (about 50%). Lidya is therefore presented as a reader for indicators and data, not a prediction tool. Not investment advice.
 
