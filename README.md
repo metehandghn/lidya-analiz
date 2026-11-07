@@ -1,6 +1,6 @@
 # Lidya Analiz
 
-### 👉 Canlı site: **[lidyaanaliz.netlify.app](https://lidyaanaliz.netlify.app)**
+### 👉 Canlı site: **[lidyaanaliz.formulfit.workers.dev](https://lidyaanaliz.formulfit.workers.dev)**
 
 ![Lidya Analiz ana sayfa](lidya-hero.png)
 
@@ -31,15 +31,15 @@ Adını, tarihte ilk madeni parayı basan Anadolu uygarlığı **Lidya**'dan al�
 
 ## Mimari
 
-- **Arayüz:** Tek sayfa HTML/CSS/JavaScript, Netlify'da barındırılır. Tüm göstergeler, backtest, optimizasyon ve görsel analizi ziyaretçinin tarayıcısında hesaplanır.
+- **Arayüz:** Tek sayfa HTML/CSS/JavaScript, Cloudflare Workers'da barındırılır. Tüm göstergeler, backtest, optimizasyon ve görsel analizi ziyaretçinin tarayıcısında hesaplanır.
 - **Veri API'si:** Cloudflare Workers (ücretsiz plan). Fiyat, mali tablo ve haber verisini toplar, Cloudflare KV ile önbelleğe alır.
 - **Çeviri:** Cloudflare Workers AI.
-- **Veri kaynakları:** Twelve Data ve Yahoo Finance (fiyat), İş Yatırım (BIST mali tabloları), SEC EDGAR (ABD mali tabloları), Finnhub ve Google Haberler (haberler), KAP bildirimlerini yayımlayan haber siteleri (KAP açıklamaları).
+- **Veri kaynakları:** Twelve Data ve Yahoo Finance (fiyat), İş Yatırım (BIST mali tabloları), SEC EDGAR (ABD mali tabloları), Finnhub, Google ve Bing Haberler (haberler), KAP (resmi şirket bildirimleri).
 - **Güvenlik ve performans:** Kaynak sınırlaması (CORS), IP başına istek limiti, girdi doğrulama, eski veriyi gösterip arka planda yenileyen önbellek.
 
 ## Kaynak kod
 
-Bu repo projenin **ilk sürümünün** (Python/FastAPI backend) kodunu içerir. Güncel site yeni bir altyapıyla (Cloudflare Workers + Netlify) çalışmaktadır ve kodu paylaşılmamaktadır. Siteyi denemek için yukarıdaki bağlantıyı kullanın.
+Bu repo projenin **ilk sürümünün** (Python/FastAPI backend) kodunu içerir. Güncel site yeni bir altyapıyla (Cloudflare Workers) çalışmaktadır ve kodu paylaşılmamaktadır. Siteyi denemek için yukarıdaki bağlantıyı kullanın.
 
 ## Eski sürümü (Python/FastAPI) çalıştırma
 
@@ -83,13 +83,13 @@ Metehan Dağhan · [github.com/metehandghn](https://github.com/metehandghn)
 
 # Lidya Analiz (English)
 
-**Live site:** [lidyaanaliz.netlify.app](https://lidyaanaliz.netlify.app)
+**Live site:** [lidyaanaliz.formulfit.workers.dev](https://lidyaanaliz.formulfit.workers.dev)
 
 A free stock analysis tool for Turkish (BIST) and US (NASDAQ/NYSE) stocks. It brings together nine technical indicators, fundamentals computed from official filings (P/E, P/B, margins, growth), 6-month to 5-year returns with a 0–100 trend-stability score, company news tagged as bullish, bearish or neutral (US news is translated to Turkish with short summaries) and, for BIST stocks, the company's recent official KAP (Public Disclosure Platform) filings. It also includes backtesting, train/test weight optimization and chart-screenshot analysis.
 
 **Key finding:** in train/test validated experiments across both markets and many tickers, the hit rate of the technical signals was statistically indistinguishable from a coin flip (about 50%). Lidya is therefore presented as a reader for indicators and data, not a prediction tool. Not investment advice.
 
-**Stack:** single-page HTML/CSS/JS on Netlify (all analytics run in the browser), a data API on Cloudflare Workers with KV caching and Workers AI translation. Data from Twelve Data, Yahoo Finance, İş Yatırım, SEC EDGAR, Finnhub and Google News.
+**Stack:** single-page HTML/CSS/JS on Cloudflare Workers (all analytics run in the browser), a data API on Cloudflare Workers with KV caching and Workers AI translation. Data from Twelve Data, Yahoo Finance, İş Yatırım, SEC EDGAR, Finnhub, Google/Bing News and KAP.
 
 This repository contains the code of the **first version** (Python/FastAPI API, originally hosted on Railway). The current version runs on a new stack and its source is not published. To run the first version yourself: `pip install -r requirements.txt` then `uvicorn app.main:app --reload` and open `http://127.0.0.1:8000/docs`. On Railway/Render use the start command `uvicorn app.main:app --host 0.0.0.0 --port $PORT` and set `TWELVE_DATA_API_KEY` (optional) and `ALLOW_SYNTHETIC_FALLBACK=false`. This version is no longer maintained.
 
