@@ -47,8 +47,8 @@ Bu repodaki kod, sitenin ilk sürümünün API'sidir. İlk sürüm **Railway** �
 **Kendi bilgisayarında (Python 3.11+):**
 
 ```bash
-git clone https://github.com/metehandghn/borsa-paneli-backend.git
-cd borsa-paneli-backend
+git clone https://github.com/metehandghn/lidya-analiz.git
+cd lidya-analiz
 python -m venv .venv
 # Windows: .venv\Scripts\activate   |   macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
